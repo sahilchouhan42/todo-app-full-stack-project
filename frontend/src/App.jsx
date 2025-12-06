@@ -5,6 +5,7 @@ import './App.css'
 import NavBar from './components/NavBar'
 import { Route, Routes } from 'react-router-dom'
 import AddTask from './components/AddTask'
+import List from './components/List'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -13,7 +14,7 @@ function App() {
     <>
       <NavBar />
       <Routes>
-        <Route path='/' element={<h1>Task List</h1>}/>
+        <Route path='/' element={<List />}/>
         <Route path='/add' element={<AddTask />}/>
       </Routes>
     </>

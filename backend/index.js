@@ -25,6 +25,25 @@ app.post('/add-task', async (req, res)=>{
     }
 })
 
+app.get('/tasks', async (req, res)=>{
+    const db = await connection();
+    const collection = await db.collection(collectionName)
+    const result = await collection.find().toArray()
+    if(result){
+        res.send({
+            message: "task list fetched",
+            success: true,
+            result: result
+        })
+    } else{
+        res.send({
+            message: "error try after some time",
+            success: false,
+        })
+
+    }
+})
+
 app.get('/', (req, res)=>{
     res.send({
         message: 'Basic API Done',

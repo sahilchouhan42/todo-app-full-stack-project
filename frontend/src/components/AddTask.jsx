@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import '../style/addtask.css'
+import { useNavigate } from 'react-router-dom'
 const AddTask = () => {
   const [taskData, setTaskData] = useState({})
+  const navigate = useNavigate()
   const handleAddTask = async ()=>{
     console.log(taskData)
     let result = await fetch("http://localhost:3200/add-task", {
@@ -14,6 +16,7 @@ const AddTask = () => {
     })
     result = await result.json()
     if(result){
+      navigate('/')
       console.log('new task added')
     }
   }
