@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import '../style/list.css'
+import { Link } from 'react-router-dom'
 const List = () => {
     const [taskData, setTaskData] = useState()
 
@@ -39,7 +40,9 @@ const List = () => {
                             <li className='list-item'>{index +1 }</li>
                             <li className='list-item'>{item.title}</li>
                             <li className='list-item'>{item.description}</li>
-                            <li className='list-item'><button onClick={()=>deleteTask(item._id)} className='delete-item'>Delete</button></li>
+                            <li className='list-item'><button onClick={()=>deleteTask(item._id)} className='delete-item'>Delete</button>
+                            <Link to={'/update/'+item._id} className='update-item'>Update</Link>
+                            </li>
                         </Fragment>
                     ))
                 }

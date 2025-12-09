@@ -45,6 +45,27 @@ app.get('/tasks', async (req, res)=>{
     }
 })
 
+
+app.get('/task/:id', async (req, res)=>{
+    const db = await connection();
+    const id = req.params.id
+    const collection = await db.collection(collectionName)
+    const result = await collection.findOne({_id: new ObjectId(id)})    
+    if(result){
+        res.send({
+            message: "task fetched",
+            success: true,
+            result: result
+        })
+    } else{
+        res.send({
+            message: "error try after some time",
+            success: false,
+        })
+
+    }
+})
+
 app.delete('/delete/:id', async (req, res)=>{
     const db = await connection();
     const id = req.params.id
