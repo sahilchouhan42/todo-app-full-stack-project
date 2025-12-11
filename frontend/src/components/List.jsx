@@ -3,6 +3,7 @@ import '../style/list.css'
 import { Link } from 'react-router-dom'
 const List = () => {
     const [taskData, setTaskData] = useState()
+    const [selectedTask, setSelectedTask] = useState([])
 
     useEffect(() => {
         getListData()
@@ -25,10 +26,35 @@ const List = () => {
             getListData()
         }
     }
+
+    const selectAll =(e)=>{
+        console.log(e.target.checked)
+        if(e.target.checked){
+            let items = taskData.map((item)=>item._id)
+            console.log(items)
+            setSelectedTask(items)
+        } else{
+            setSelectedTask([])
+        }
+    }
+    console.log(selectedTask)
+
+    const selectSingleItem = (id)=>{
+        console.log(id)
+        if(selectedTask.includes(id)){
+            let items = selectedTask.filter((item)=>item!=id)
+            setSelectedTask(items)
+        } else{
+            setSelectedTask(id, ...selectedTask)
+        }
+    }
+
+
     return (
         <div>
             <h1>To Do list</h1>
             <ul className='task-list'>
+                <li className='list-header'><input onChange={selectAll} type='checkbox' /></li>
                 <li className='list-header'>S.No</li>
                 <li className='list-header'>Title</li>
                 <li className='list-header'>Description</li>
@@ -37,6 +63,7 @@ const List = () => {
                 {
                     taskData && taskData.map((item, index) => (
                         <Fragment key={item._id}>
+                            <li className='list-item'><input onChange={()=>selectSingleItem(item._id)} checked={selectedTask.includes(item._id)} type='checkbox' /></li>
                             <li className='list-item'>{index +1 }</li>
                             <li className='list-item'>{item.title}</li>
                             <li className='list-item'>{item.description}</li>
