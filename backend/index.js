@@ -87,13 +87,26 @@ app.delete('/delete/:id', async (req, res)=>{
 })
 
 
+app.delete('/delete-multiple/', async (req, res)=>{
+    const db = await connection();
+    const Ids = req.body
+    const deleteTaskIds = Ids.map((item)=>new ObjectId(item))
+    console.log(Ids)
+    const collection = await db.collection(collectionName)
+    const result = await collection.deleteMany({_id:{$in: deleteTaskIds}})
+    if(result){
+        res.send({
+            message: "task deleted",
+            success: result
+        })
+    } else{
+        res.send({
+            message: "error try after some time",
+            success: false,
+        })
 
-
-app.get('/', (req, res)=>{
-    res.send({
-        message: 'Basic API Done',
-        success: true
-    })
+    }
 })
+
 
 app.listen(3200, ()=>console.log("Server is running on port..."))

@@ -43,9 +43,26 @@ const List = () => {
         console.log(id)
         if(selectedTask.includes(id)){
             let items = selectedTask.filter((item)=>item!=id)
-            setSelectedTask(items)
+            setSelectedTask([items])
         } else{
-            setSelectedTask(id, ...selectedTask)
+            setSelectedTask([id, ...selectedTask])
+        }
+    }
+
+    const deleteMultiple = async ()=>{
+        console.log(selectedTask)
+        let item = await fetch('http://localhost:3200/delete-multiple/', 
+            {
+                method: 'delete',
+                body: JSON.stringify(selectedTask),
+                headers: {
+                    'Content-Type': 'Application/Json'
+                }
+            })
+        item = await item.json()
+        if (item.success) {
+            console.log('item deleted', item    )
+            getListData()
         }
     }
 
@@ -53,6 +70,7 @@ const List = () => {
     return (
         <div>
             <h1>To Do list</h1>
+            <button onClick={deleteMultiple} className='delete-item delete-multiple'>Delete</button>
             <ul className='task-list'>
                 <li className='list-header'><input onChange={selectAll} type='checkbox' /></li>
                 <li className='list-header'>S.No</li>

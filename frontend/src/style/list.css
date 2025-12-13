@@ -50,3 +50,7 @@
 .update-item:hover{
     background-color: rgb(1, 83, 1);
 }
+.delete-multiple{
+    width: 100px;
+    margin-left: 20px;
+}
