@@ -20,6 +20,21 @@ const UpdateTask = () => {
     }
   }
 
+  const updateTask = async ()=>{
+    console.log('funtion called', taskData)
+    let task = await fetch(`http://localhost:3200/update-task`, {
+      method: "put",
+      body: JSON.stringify(taskData),
+      headers:{
+        'Content-Type': 'Application/Json'
+      }
+    })
+    task = await task.json()
+    if(task){
+      navigate('/')
+    }
+  }
+
   return (
     <div className='container'>
       <h1>Update Task</h1>
@@ -28,7 +43,7 @@ const UpdateTask = () => {
         <input value={taskData?.title} onChange={(event)=>setTaskData({...taskData, title:event.target.value})} type="text" name="title" placeholder='Enter Task Title' />
         <label htmlFor="">Description</label>
         <textarea value={taskData?.description} onChange={(event)=>setTaskData({...taskData, description:event.target.value})} rows={4} name="description" placeholder='Enter Task Description'></textarea>
-        <button  className='submit'>Update Task</button>
+        <button onClick={updateTask} className='submit'>Update Task</button>
      
     </div>
   )

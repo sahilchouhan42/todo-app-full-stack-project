@@ -109,4 +109,29 @@ app.delete('/delete-multiple/', async (req, res)=>{
 })
 
 
+app.put('/update-task', async (req, res)=>{
+    const db = await connection();
+    const collection = await db.collection(collectionName)
+    const {_id,...fields}=req.body
+    const update = {$set: fields}
+    console.log(fields)
+    const result = await collection.updateOne({_id: new ObjectId(_id)}, update)
+    if(result){
+        res.send({
+            message: "task updated",
+            success: true,
+            result: result
+        })
+    } else{
+        res.send({
+            message: "error try after some time",
+            success: false,
+        })
+
+    }
+})
+
+
+
+
 app.listen(3200, ()=>console.log("Server is running on port..."))
