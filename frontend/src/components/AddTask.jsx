@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import '../style/addtask.css'
 import { useNavigate } from 'react-router-dom'
+
 const AddTask = () => {
+  const apiUrl = import.meta.env.VITE_API_URL
   const [taskData, setTaskData] = useState({})
   const navigate = useNavigate()
   const handleAddTask = async ()=>{
     console.log(taskData)
-    let result = await fetch("http://localhost:3200/add-task", {
+    let result = await fetch(`${apiUrl}/add-task`, {
       method: "Post",
       body:JSON.stringify(taskData),
       headers:{

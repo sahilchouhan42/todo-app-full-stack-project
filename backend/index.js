@@ -1,11 +1,17 @@
 import express from 'express'
+import 'dotenv/config'
 import { collectionName, connection } from './dbconfig.js'
 import cors from 'cors'
 import { ObjectId } from 'mongodb'
+const port = process.env.PORT
 const app =express()
 
 app.use(express.json())
-app.use(cors())
+// app.use(cors())
+app.use(cors({
+//   origin: ['https://your-frontend-url.com'], // frontend live URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+}));
 
 app.post('/add-task', async (req, res)=>{
     const db = await connection();
@@ -134,4 +140,4 @@ app.put('/update-task', async (req, res)=>{
 
 
 
-app.listen(3200, ()=>console.log("Server is running on port..."))
+app.listen(port, ()=>console.log("Server is running on port..."))

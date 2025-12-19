@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import '../style/addtask.css'
 import { useNavigate, useParams } from 'react-router-dom'
 
+
 const UpdateTask = () => {
+  const apiUrl = import.meta.env.VITE_API_URL
   const [taskData, setTaskData] = useState({})
   const navigate = useNavigate()
   const {id} = useParams()
@@ -13,7 +16,7 @@ const UpdateTask = () => {
   },[])
 
   const getTask = async (id)=>{
-    let task = await fetch(`http://localhost:3200/task/` + id)
+    let task = await fetch(`${apiUrl}/task/${id}`)
     task = await task.json()
     if(task.result){
         setTaskData(task.result )
@@ -22,7 +25,7 @@ const UpdateTask = () => {
 
   const updateTask = async ()=>{
     console.log('funtion called', taskData)
-    let task = await fetch(`http://localhost:3200/update-task`, {
+    let task = await fetch(`${apiUrl}/update-task`, {
       method: "put",
       body: JSON.stringify(taskData),
       headers:{

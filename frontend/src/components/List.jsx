@@ -1,7 +1,10 @@
 import React, { Fragment, useEffect, useState } from 'react'
+import axios from 'axios'
 import '../style/list.css'
 import { Link } from 'react-router-dom'
+
 const List = () => {
+    const apiUrl = import.meta.env.VITE_API_URL
     const [taskData, setTaskData] = useState()
     const [selectedTask, setSelectedTask] = useState([])
 
@@ -10,7 +13,7 @@ const List = () => {
     }, [])
 
     const getListData = async () => {
-        let list = await fetch('http://localhost:3200/tasks')
+        let list = await fetch(`${apiUrl}/tasks`)
         list = await list.json()
         if (list.success) {
             setTaskData(list.result)
@@ -19,7 +22,7 @@ const List = () => {
     }
 
     const deleteTask = async (id)=>{
-        let item = await fetch('http://localhost:3200/delete/'+id, {method: 'delete'})
+        let item = await fetch(`${apiUrl}/delete/${id}`, {method: 'delete'})
         item = await item.json()
         if (item.success) {
             console.log('item deleted', item    )
@@ -51,12 +54,12 @@ const List = () => {
 
     const deleteMultiple = async ()=>{
         console.log(selectedTask)
-        let item = await fetch('http://localhost:3200/delete-multiple/', 
+        let item = await fetch(`${apiUrl}/delete-multiple/`, 
             {
                 method: 'delete',
                 body: JSON.stringify(selectedTask),
                 headers: {
-                    'Content-Type': 'Application/Json'
+                    'Content-Type': 'application/Json'
                 }
             })
         item = await item.json()
